@@ -1,0 +1,367 @@
+PART 2:
+
+What are all the types of pokemon that a pokemon can have?
+
+mysql> select * from types;
++----+----------+
+| id | name     |
++----+----------+
+|  1 | Normal   |
+|  2 | Water    |
+|  3 | Grass    |
+|  4 | Rock     |
+|  5 | Fire     |
+|  6 | Ground   |
+|  7 | Poison   |
+|  8 | Bug      |
+|  9 | Electric |
+| 10 | Dragon   |
+| 11 | Steel    |
+| 12 | Dark     |
+| 13 | Fighting |
+| 14 | Psychic  |
+| 15 | Ghost    |
+| 16 | Fairy    |
+| 17 | Ice      |
+| 18 | Flying   |
++----+----------+
+18 rows in set (0.00 sec)
+
+What is the name of the pokemon with id 45?
+
+mysql> select id, name from pokemons where id = 45;
++----+-------+
+| id | name  |
++----+-------+
+| 45 | Eevee |
++----+-------+
+1 row in set (0.00 sec)
+
+How many pokemon are there?
+
+mysql> select count(*) from pokemons;
++----------+
+| count(*) |
++----------+
+|      656 |
++----------+
+1 row in set (0.01 sec)
+
+How many types are there?
+
+mysql> select count(*) from types;
++----------+
+| count(*) |
++----------+
+|       18 |
++----------+
+1 row in set (0.00 sec)
+
+How many pokemon have a secondary type?
+
+mysql> select count(*) from pokemons where secondary_type IS NOT NULL;
++----------+
+| count(*) |
++----------+
+|      316 |
++----------+
+1 row in set (0.00 sec)
+
+
+PART 3:
+What is each pokemon's primary type?
+mysql> SELECT pokemons.id, pokemons.name, types.name FROM pokemons RIGHT JOIN types ON pokemons.primary_type = types.id ORDER BY pokemons.id;
+
+**see part3primarytype.txt for table
+
+What is Rufflet's secondary type?
+mysql> SELECT types.name FROM types JOIN pokemons ON types.id = pokemons.secondary_type WHERE pokemons.name = 'Rufflet';
++--------+
+| name   |
++--------+
+| Flying |
++--------+
+
+What are the names of the pokemon that belong to the trainer with trainerID 303?
+
+mysql> SELECT pokemons.id, pokemons.name FROM pokemons RIGHT JOIN pokemon_trainer on pokemon_trainer.pokemon_ID = pokemons.id where pokemon_trainer.trainerID = 303;
++------+-----------+
+| id   | name      |
++------+-----------+
+|    2 | Wailord   |
+|    3 | Vileplume |
++------+-----------+
+2 rows in set (0.03 sec)
+
+How many pokemon have a secondary type `Poison`
+
+mysql> SELECT count(*) from pokemons where secondary_type = 7;
++----------+
+| count(*) |
++----------+
+|       31 |
++----------+
+1 row in set (0.01 sec)
+
+What are all the primary types and how many pokemon have that type?
+
+mysql> SELECT types.name, count(*) FROM types JOIN pokemons ON pokemons.primary_type = types.id GROUP BY types.name ORDER BY count(*);
++----------+----------+
+| name     | count(*) |
++----------+----------+
+| Flying   |        1 |
+| Fairy    |       14 |
+| Steel    |       19 |
+| Ghost    |       19 |
+| Dragon   |       22 |
+| Ice      |       22 |
+| Dark     |       24 |
+| Fighting |       25 |
+| Poison   |       27 |
+| Ground   |       29 |
+| Electric |       35 |
+| Rock     |       38 |
+| Fire     |       38 |
+| Psychic  |       38 |
+| Grass    |       59 |
+| Bug      |       61 |
+| Normal   |       90 |
+| Water    |       95 |
++----------+----------+
+18 rows in set (0.01 sec)
+
+* How many pokemon at level 100 does each trainer with at least one level 100 pokemone have? (Hint: your query should not display a trainer)
+
+mysql> SELECT count(*) FROM pokemon_trainer WHERE pokemon_trainer.pokelevel >= 100 GROUP BY pokemon_trainer.trainerID HAVING count(*) >= 1;
++----------+
+| count(*) |
++----------+
+|        6 |
+|        6 |
+|        6 |
+|        6 |
+|        6 |
+|        6 |
+|        6 |
+|        6 |
+|        6 |
+|        6 |
+|        6 |
+|        6 |
+|        6 |
+|        6 |
+|        6 |
+|        6 |
+|        6 |
+|        5 |
+|        6 |
+|        6 |
+|        6 |
+|        6 |
+|        6 |
+|        6 |
+|        1 |
+|        2 |
+|        6 |
+|        6 |
+|        6 |
+|        6 |
+|        5 |
+|        5 |
+|        6 |
+|        6 |
+|        6 |
+|        6 |
+|        6 |
+|        6 |
+|        6 |
+|        5 |
+|        6 |
+|        6 |
+|        6 |
+|        6 |
+|        6 |
+|        6 |
+|        6 |
+|        6 |
+|        2 |
+|        2 |
+|        1 |
+|        6 |
+|        6 |
+|        2 |
+|        1 |
+|        1 |
+|        6 |
+|        6 |
+|        6 |
+|        6 |
+|        6 |
+|        6 |
+|        6 |
+|        6 |
+|        6 |
+|        6 |
+|        6 |
+|        6 |
+|        6 |
+|        6 |
+|        6 |
+|        6 |
+|        6 |
+|        5 |
+|        6 |
+|        6 |
+|        6 |
+|        6 |
+|        6 |
+|        6 |
+|        1 |
+|        2 |
+|        6 |
+|        6 |
+|        6 |
+|        6 |
+|        5 |
+|        5 |
+|        6 |
+|        6 |
+|        6 |
+|        6 |
+|        6 |
+|        6 |
+|        6 |
+|        5 |
+|        6 |
+|        6 |
+|        6 |
+|        6 |
+|        6 |
+|        6 |
+|        6 |
+|        6 |
+|        2 |
+|        2 |
+|        1 |
+|        6 |
+|        6 |
+|        2 |
+|        1 |
+|        1 |
+|        6 |
+|        6 |
+|        6 |
+|        6 |
+|        1 |
+|        1 |
+|        6 |
+|        6 |
+|        6 |
+|        6 |
+|        2 |
+|        5 |
+|        5 |
+|        6 |
+|        6 |
+|        6 |
+|        6 |
+|        6 |
+|        6 |
+|        1 |
+|        1 |
+|        1 |
+|        1 |
+|        1 |
+|        6 |
+|        6 |
+|        6 |
+|        6 |
+|        6 |
+|        2 |
+|        1 |
+|        6 |
+|        6 |
+|        6 |
+|        6 |
+|        5 |
+|        6 |
+|        6 |
+|        6 |
+|        2 |
+|        1 |
+|        2 |
+|        1 |
+|        6 |
+|        6 |
+|        6 |
+|        6 |
+|        6 |
+|        6 |
+|        6 |
+|        6 |
+|        6 |
+|        6 |
+|        2 |
+|        1 |
+|        2 |
+|        2 |
+|        5 |
+|        6 |
+|        2 |
+|        6 |
+|        6 |
+|        6 |
+|        6 |
+|        6 |
+|        6 |
+|        6 |
+|        6 |
+|        6 |
+|        6 |
+|        6 |
+|        6 |
+|        2 |
+|        1 |
+|        6 |
+|        6 |
+|        1 |
+|        2 |
+|        6 |
+|        2 |
+|        2 |
+|        2 |
++----------+
+194 rows in set (0.03 sec)
+
+How many pokemon only belong to one trainer and no other?
+mysql> SELECT COUNT(*) FROM pokemon_trainer GROUP BY pokemon_trainer.pokemon_ID HAVING count(*) = 1;
++----------+
+| COUNT(*) |
++----------+
+|        1 |
+|        1 |
+|        1 |
+|        1 |
+|        1 |
+|        1 |
+|        1 |
+|        1 |
+|        1 |
+|        1 |
+|        1 |
+|        1 |
+|        1 |
++----------+
+13 rows in set (0.02 sec)
+
+### Part 4: Final Report
+
+Directions: Write a query that returns the following collumns:
+
+| Pokemon Name | Trainer Name | Level | Primary Type | Secondary Type |
+|:------------:|:------------:|:-----:|:------------:|:--------------:|
+| Pokemon's name| Trainer's name| Current Level| Primary Type Name| Secondary Type Name|
+
+Sort the data by finding out which trainer has the strongest pokemon so that this will act as a ranking of strongest to weakest trainer. You may interpret strongest in whatever way you want, but you will have to explain your decision.
+
+For Part 4 specifically also leave a comment explaining how your query is deciding who the strongest trainer is

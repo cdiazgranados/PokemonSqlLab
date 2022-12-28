@@ -1,0 +1,45 @@
+mysql> describe pokemon_trainer;
++------------+------+------+-----+---------+-------+
+| Field      | Type | Null | Key | Default | Extra |
++------------+------+------+-----+---------+-------+
+| trainerID  | int  | YES  |     | NULL    |       |
+| pokelevel  | int  | YES  |     | NULL    |       |
+| hp         | int  | YES  |     | NULL    |       |
+| maxhp      | int  | YES  |     | NULL    |       |
+| attack     | int  | YES  |     | NULL    |       |
+| defense    | int  | YES  |     | NULL    |       |
+| spatk      | int  | YES  |     | NULL    |       |
+| spdef      | int  | YES  |     | NULL    |       |
+| speed      | int  | YES  |     | NULL    |       |
+| pokemon_id | int  | YES  |     | NULL    |       |
++------------+------+------+-----+---------+-------+
+10 rows in set (0.01 sec)
+
+describe pokemons;
++----------------+------+------+-----+---------+----------------+
+| Field          | Type | Null | Key | Default | Extra          |
++----------------+------+------+-----+---------+----------------+
+| id             | int  | NO   | PRI | NULL    | auto_increment |
+| name           | text | NO   |     | NULL    |                |
+| primary_type   | int  | NO   |     | NULL    |                |
+| secondary_type | int  | YES  |     | NULL    |                |
++----------------+------+------+-----+---------+----------------+
+4 rows in set (0.00 sec)
+
+mysql> describe trainers;
++-------------+------+------+-----+---------+-------+
+| Field       | Type | Null | Key | Default | Extra |
++-------------+------+------+-----+---------+-------+
+| trainerID   | int  | NO   | PRI | NULL    |       |
+| trainername | text | YES  |     | NULL    |       |
++-------------+------+------+-----+---------+-------+
+2 rows in set (0.01 sec)
+
+describe types;
++-------+------+------+-----+---------+----------------+
+| Field | Type | Null | Key | Default | Extra          |
++-------+------+------+-----+---------+----------------+
+| id    | int  | NO   | PRI | NULL    | auto_increment |
+| name  | text | NO   |     | NULL    |                |
++-------+------+------+-----+---------+----------------+
+2 rows in set (0.00 sec)
