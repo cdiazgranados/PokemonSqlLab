@@ -84,7 +84,7 @@ mysql> SELECT types.name FROM types JOIN pokemons ON types.id = pokemons.seconda
 
 What are the names of the pokemon that belong to the trainer with trainerID 303?
 
-mysql> SELECT pokemons.id, pokemons.name FROM pokemons RIGHT JOIN pokemon_trainer on pokemon_trainer.pokemon_ID = pokemons.id where pokemon_trainer.trainerID = 303;
+mysql> SELECT pokemons.id, pokemons.name FROM pokemons RIGHT JOIN pokemon_trainer ON pokemon_trainer.pokemon_ID = pokemons.id where pokemon_trainer.trainerID = 303;
 +------+-----------+
 | id   | name      |
 +------+-----------+
@@ -132,7 +132,7 @@ mysql> SELECT types.name, count(*) FROM types JOIN pokemons ON pokemons.primary_
 
 * How many pokemon at level 100 does each trainer with at least one level 100 pokemone have? (Hint: your query should not display a trainer)
 
-mysql> SELECT count(*) FROM pokemon_trainer WHERE pokemon_trainer.pokelevel >= 100 GROUP BY pokemon_trainer.trainerID HAVING count(*) >= 1;
+mysql> SELECT count(*) FROM pokemon_trainer WHERE pokemon_trainer.pokelevel = 100 GROUP BY pokemon_trainer.trainerID HAVING count(*) >= 1;
 +----------+
 | count(*) |
 +----------+
@@ -365,3 +365,14 @@ Directions: Write a query that returns the following collumns:
 Sort the data by finding out which trainer has the strongest pokemon so that this will act as a ranking of strongest to weakest trainer. You may interpret strongest in whatever way you want, but you will have to explain your decision.
 
 For Part 4 specifically also leave a comment explaining how your query is deciding who the strongest trainer is
+
+//need to create an alias //if pokemon have a null secondary_type will they show up?
+SELECT pokemons.name, trainers.trainername, pokemon_trainer.pokelevel, types1.name, types2.name 
+FROM pokemon_trainer
+JOIN pokemons ON pokemons.id = pokemon_trainer.pokemon_ID
+JOIN trainers ON trainers.trainerID = pokemon_trainer.trainerID
+JOIN types types1 ON types1.id = pokemons.primary_type
+JOIN types types2 ON types2.id = pokemons.primary_type
+ORDER BY pokemon_trainer.pokelevel;
+
+//I decided to order this table by the trainers pokelevel because there is no way that a trainer such as Youngster Mikey at pokelevel 2 with two Pidgeys has stronger pokemon than trainers at level 100. Also pokelevel is a column on the table so it makes sense visually to order by pokelevel.
